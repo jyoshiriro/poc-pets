@@ -2,6 +2,7 @@ package prosper.pets.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class UsuariosConfig {
 
     @Bean
+    @Profile("dev")
     public UserDetailsService users() {
         UserDetails usuario1 = User.builder()
                 .username("usuario1")
