@@ -1,6 +1,5 @@
 package prosper.pets.service;
 
-import org.springframework.stereotype.Service;
 import prosper.pets.domain.logs.RegistroLog;
 
 public interface RegistroLogService {

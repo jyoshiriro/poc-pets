@@ -10,6 +10,7 @@ import prosper.pets.config.apiclient.RacasApi;
 import prosper.pets.domain.Pet;
 import prosper.pets.domain.racas.RacaPet;
 import prosper.pets.domain.racas.TipoRaca;
+import prosper.pets.exception.ChamadaApiException;
 import prosper.pets.exception.PetNaoEncontradoException;
 import prosper.pets.respository.PetRepository;
 
@@ -84,7 +85,11 @@ public class PetService {
     }
 
     protected void registrarLog(Authentication authentication, String descricao, Object... parametros) {
-        registroLogService.registrarLog(authentication.getName(), String.format(descricao, parametros));
+        try {
+            registroLogService.registrarLog(authentication.getName(), String.format(descricao, parametros));
+        } catch (FeignException ex) {
+            throw ChamadaApiException.criar("Logs", ex);
+        }
     }
 
     protected void validarId(Long idPet) {
@@ -93,39 +98,29 @@ public class PetService {
         }
     }
 
-    public RacaPet getRaca(TipoRaca tipo, String raca) {
-        List<RacaPet> racas = null;
+    protected RacaPet getRaca(TipoRaca tipo, String raca) {
+        List<RacaPet> racas;
 
         try {
             racas = racasApi.get(tipo.getUri(), raca);
         } catch (FeignException ex) {
-            if (ex.status() == -1) {
-                throw new ResponseStatusException(
-                        HttpStatus.SERVICE_UNAVAILABLE,
-                        "API de Raças indisponível"
-                );
-            }
-            throw new ResponseStatusException(
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                    String.format("Erro na chamada à API de raças: %s", ex.getMessage()),
-                ex
-            );
+            throw ChamadaApiException.criar("Raças", ex);
         }
 
         if (racas.isEmpty()) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    String.format("Raça '%s' não encontrada na API de raças", raca)
+                HttpStatus.NOT_FOUND,
+                String.format("Raça '%s' não encontrada na API de raças", raca)
             );
         }
 
         if (racas.size() > 1) {
             throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    String.format(
-                        "Mais de um raça encontrada para '%s': %s",
-                        raca, racas.stream().map(RacaPet::getRaca).collect(Collectors.joining(", "))
-                    )
+                HttpStatus.CONFLICT,
+                String.format(
+                    "Mais de um raça encontrada para '%s': %s",
+                    raca, racas.stream().map(RacaPet::getRaca).collect(Collectors.joining(", "))
+                )
             );
         }
 

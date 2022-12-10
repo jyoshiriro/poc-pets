@@ -3,11 +3,10 @@ package prosper.pets.service;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import prosper.pets.config.apiclient.RegistroLogsApi;
 import prosper.pets.domain.logs.RegistroLog;
+import prosper.pets.exception.ChamadaApiException;
 
 @Profile({"hml","prod"})
 @Service
@@ -21,17 +20,7 @@ public class RegistroLogServiceImpl implements RegistroLogService {
         try {
             return registroLogsApi.post(novoRegistroLog);
         } catch (FeignException ex) {
-            if (ex.status() == -1) {
-                throw new ResponseStatusException(
-                        HttpStatus.SERVICE_UNAVAILABLE,
-                        "API de Logs indisponível"
-                );
-            }
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    String.format("Erro na chamada à API de Logs: %s", ex.getMessage()),
-                    ex
-            );
+            throw ChamadaApiException.criar("Logs", ex);
         }
     }
 }

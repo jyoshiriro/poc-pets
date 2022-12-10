@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import prosper.pets.domain.logs.RegistroLog;
 
-@Profile({"!hml","!prod"})
+@Profile("dev")
 @Service
 public class RegistroLogServiceDevImpl implements RegistroLogService {
 
