@@ -10,6 +10,7 @@ import prosper.pets.config.apiclient.RacasApi;
 import prosper.pets.domain.Pet;
 import prosper.pets.domain.racas.RacaPet;
 import prosper.pets.domain.racas.TipoRaca;
+import prosper.pets.exception.PetNaoEncontradoException;
 import prosper.pets.respository.PetRepository;
 
 import java.util.List;
@@ -88,10 +89,7 @@ public class PetService {
 
     protected void validarId(Long idPet) {
         if (!petRepository.existsById(idPet)) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    String.format("Pet de id %d encontrado", idPet)
-            );
+            throw new PetNaoEncontradoException();
         }
     }
 
