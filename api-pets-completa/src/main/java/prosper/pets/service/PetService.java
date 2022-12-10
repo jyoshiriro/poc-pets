@@ -1,16 +1,13 @@
 package prosper.pets.service;
 
 import feign.FeignException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import prosper.pets.config.apiclient.RacasApi;
-import prosper.pets.config.apiclient.RegistroLogsApi;
 import prosper.pets.domain.Pet;
-import prosper.pets.domain.logs.RegistroLog;
 import prosper.pets.domain.racas.RacaPet;
 import prosper.pets.domain.racas.TipoRaca;
 import prosper.pets.respository.PetRepository;
@@ -21,18 +18,15 @@ import java.util.stream.Collectors;
 @Service
 public class PetService {
 
-    @Autowired
     private RacasApi racasApi;
 
-    @Autowired
-    private RegistroLogsApi registroLogsApi;
+    private RegistroLogService registroLogService;
 
-    @Autowired
     private PetRepository petRepository;
 
-    public PetService(RacasApi racasApi, RegistroLogsApi registroLogsApi, PetRepository petRepository) {
+    public PetService(RacasApi racasApi, RegistroLogService registroLogService, PetRepository petRepository) {
         this.racasApi = racasApi;
-        this.registroLogsApi = registroLogsApi;
+        this.registroLogService = registroLogService;
         this.petRepository = petRepository;
     }
 
@@ -89,7 +83,7 @@ public class PetService {
     }
 
     protected void registrarLog(Authentication authentication, String descricao, Object... parametros) {
-        registroLogsApi.post(new RegistroLog(authentication.getName(), String.format(descricao, parametros)));
+        registroLogService.registrarLog(authentication.getName(), String.format(descricao, parametros));
     }
 
     protected void validarId(Long idPet) {

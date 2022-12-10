@@ -9,13 +9,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+@Profile({"dev","hml"})
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class UsuariosConfig {
 
     @Bean
-    @Profile("dev")
-    public UserDetailsService users() {
+    public UserDetailsService criarUsuarios() {
         UserDetails usuario1 = User.builder()
                 .username("usuario1")
                 .password("{noop}s1")
@@ -36,4 +36,5 @@ public class UsuariosConfig {
 
         return new InMemoryUserDetailsManager(usuario1, usuario2, usuario3);
     }
+
 }

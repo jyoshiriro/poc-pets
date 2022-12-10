@@ -2,6 +2,7 @@ package prosper.pets.config.apiclient;
 
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +18,4 @@ public interface RegistroLogsApi {
     @PostMapping
     RegistroLog post(@RequestBody RegistroLog novoRegistroLog);
 
-    @GetMapping
-    List<RacaPet> get(@RequestParam String username);
-
-    @GetMapping
-    List<RacaPet> get();
 }
