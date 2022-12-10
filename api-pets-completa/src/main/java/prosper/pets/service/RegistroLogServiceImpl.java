@@ -20,7 +20,7 @@ public class RegistroLogServiceImpl implements RegistroLogService {
         try {
             return registroLogsApi.post(novoRegistroLog);
         } catch (FeignException ex) {
-            throw ChamadaApiException.criar("Logs", ex);
+            throw new ChamadaApiException("Logs", ex);
         }
     }
 }

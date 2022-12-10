@@ -88,7 +88,7 @@ public class PetService {
         try {
             registroLogService.registrarLog(authentication.getName(), String.format(descricao, parametros));
         } catch (FeignException ex) {
-            throw ChamadaApiException.criar("Logs", ex);
+            throw new ChamadaApiException("Logs", ex);
         }
     }
 
@@ -104,7 +104,7 @@ public class PetService {
         try {
             racas = racasApi.get(tipo.getUri(), raca);
         } catch (FeignException ex) {
-            throw ChamadaApiException.criar("Raças", ex);
+            throw new ChamadaApiException("Raças", ex);
         }
 
         if (racas.isEmpty()) {
