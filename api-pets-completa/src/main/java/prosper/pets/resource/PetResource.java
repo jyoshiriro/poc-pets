@@ -60,7 +60,7 @@ public class PetResource {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/{novoPeso}")
+    @PatchMapping("/{id}/peso/{novoPeso}")
     @Secured("ROLE_admin")
     public ResponseEntity<Void> patch(@PathVariable Long id,
                                       @PathVariable Double novoPeso,
