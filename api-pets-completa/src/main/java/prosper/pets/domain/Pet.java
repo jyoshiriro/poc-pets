@@ -60,6 +60,7 @@ public class Pet {
     private Long idRaca;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime criacao;
 
     @UpdateTimestamp

@@ -3,7 +3,7 @@ package prosper.pets.domain.racas;
 public enum TipoRaca {
 
     CACHORRO("cachorros"),
-    GATOS("gatos"),
+    GATO("gatos"),
     COELHO("coelhos");
 
     private String uri;

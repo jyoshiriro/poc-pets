@@ -47,13 +47,12 @@ public class PetService {
         return pet;
     }
 
-    public Pet atualizar(Long idPet, Pet pet, Authentication authentication) {
+    public void atualizar(Long idPet, Pet pet, Authentication authentication) {
         validarId(idPet);
         pet.setId(idPet);
         setRaca(pet);
         petRepository.save(pet);
         registrarLog(authentication, "Pet %d atualizado", pet.getId());
-        return pet;
     }
 
     public Pet recuperar(Long idPet) {

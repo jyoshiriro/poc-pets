@@ -49,7 +49,8 @@ public class PetResource {
     public ResponseEntity<Pet> put(@PathVariable Long id,
                                    @RequestBody @Valid Pet pet,
                                    Authentication authentication) {
-        return ResponseEntity.status(HttpStatus.OK).body(petService.atualizar(id, pet, authentication));
+        petService.atualizar(id, pet, authentication);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{id}")
