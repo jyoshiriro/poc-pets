@@ -58,7 +58,7 @@ public class PetService {
 
     public Pet recuperar(Long idPet) {
         validarId(idPet);
-        return petRepository.getReferenceById(idPet);
+        return petRepository.findById(idPet).get();
     }
 
     public void excluir(Long idPet, Authentication authentication) {
