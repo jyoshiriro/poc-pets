@@ -48,6 +48,7 @@ public class PetService {
     }
 
     public Pet atualizar(Long idPet, Pet pet, Authentication authentication) {
+        validarId(idPet);
         pet.setId(idPet);
         setRaca(pet);
         petRepository.save(pet);
