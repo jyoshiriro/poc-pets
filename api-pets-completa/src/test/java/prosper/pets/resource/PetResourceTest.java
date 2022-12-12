@@ -73,9 +73,10 @@ class PetResourceTest {
         requisicao.setCpfDono("56254606046");
         requisicao.setFilhotes(0);
         requisicao.setNascimento(LocalDate.now().minusYears(2));
-        requisicao.setEmailDono("eee@ggg.com");
         requisicao.setNome("Fofura");
+        requisicao.setEmailDono("eee@ggg.com");
         requisicao.setNomeDono("Zé Ruela");
+        requisicao.setTelefoneDono("11 22222-3333");
         requisicao.setPeso(1.99);
         requisicao.setRaca("bulldog");
         requisicao.setTipo(TipoRaca.CACHORRO);
