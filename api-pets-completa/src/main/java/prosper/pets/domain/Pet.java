@@ -36,7 +36,6 @@ public class Pet {
     @NotBlank
     @Size(max = 15)
     @Pattern(regexp = "(\\(?\\d{2}\\)?\\s)?(\\d{4,5}\\-\\d{4})", message = "Deve ser um número telefônico válido")
-    // fonte: https://medium.com/@igorrozani/criando-uma-express%C3%A3o-regular-para-telefone-fef7a8f98828
     private String telefoneDono;
 
     @DecimalMin("0.2")
