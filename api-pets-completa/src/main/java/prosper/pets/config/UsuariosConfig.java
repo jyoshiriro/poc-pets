@@ -11,7 +11,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Profile({"dev","hml"})
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class UsuariosConfig {
 
     @Bean

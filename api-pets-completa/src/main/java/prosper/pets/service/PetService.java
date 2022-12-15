@@ -73,6 +73,9 @@ public class PetService {
 
     public void atualizarPeso(Long idPet, Double novoPeso, Authentication authentication) {
         validarId(idPet);
+        if (novoPeso == null || novoPeso <= 0.0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "novoPeso é obrigatório e deve ser >= 0.2");
+        }
         petRepository.atualizarPeso(idPet, novoPeso);
         registrarLog(authentication, "Pet %d teve o peso atualizado para %.3f", idPet, novoPeso);
     }

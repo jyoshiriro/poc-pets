@@ -15,4 +15,5 @@ public class ChamadaApiException extends ResponseStatusException
                     nomeApi, causa.getMessage(), causa.getCause() != null ? causa.getCause() : "")
         );
     }
+
 }

@@ -1,7 +1,6 @@
 package prosper.pets.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,14 +16,12 @@ import prosper.pets.domain.Pet;
 import prosper.pets.domain.racas.TipoRaca;
 import prosper.pets.service.PetService;
 
-import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -46,14 +42,6 @@ class PetResourceTest {
     @Autowired
     ObjectMapper mapper;
 
-    Principal principal;
-
-    @BeforeEach
-    void setup() {
-        principal = mock(Authentication.class);
-
-        when(principal.getName()).thenReturn("usuario-teste");
-    }
 
     @Test
     @DisplayName("post de Pet deve retornar status 400 em caso de erro de validação")
@@ -61,7 +49,7 @@ class PetResourceTest {
         Pet requisicao = new Pet();
 
         mockMvc.perform(
-                    post(URI_BASE).contentType(MediaType.APPLICATION_JSON).principal(principal)
+                    post(URI_BASE).contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(requisicao)))
                     .andExpect(status().isBadRequest());
     }
@@ -82,7 +70,7 @@ class PetResourceTest {
         requisicao.setTipo(TipoRaca.CACHORRO);
 
         mockMvc.perform(
-                    post(URI_BASE).contentType(MediaType.APPLICATION_JSON).principal(principal)
+                    post(URI_BASE).contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(requisicao)))
                     .andExpect(status().isCreated());
     }
@@ -95,7 +83,7 @@ class PetResourceTest {
         });
 
         MvcResult resposta = mockMvc.perform(
-                        get(URI_BASE).principal(principal))
+                        get(URI_BASE))
                 .andExpect(status().isNoContent())
                 .andReturn();
 
@@ -116,7 +104,7 @@ class PetResourceTest {
         when(service.getLista(any(Pet.class))).thenReturn(lista);
 
         MvcResult resposta = mockMvc.perform(
-                        get(URI_BASE).principal(principal))
+                        get(URI_BASE))
                 .andExpect(status().isOk())
                 .andReturn();
 
