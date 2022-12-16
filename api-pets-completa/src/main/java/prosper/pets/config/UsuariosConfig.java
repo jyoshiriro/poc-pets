@@ -34,7 +34,13 @@ public class UsuariosConfig {
                 .roles("admin")
                 .build();
 
-        return new InMemoryUserDetailsManager(usuario1, usuario2, usuario3);
+        UserDetails usuario4 = User.builder()
+                .username("hacker")
+                .password("{noop}hacker")
+                .roles("hacker")
+                .build();
+
+        return new InMemoryUserDetailsManager(usuario1, usuario2, usuario3, usuario4);
     }
 
 }

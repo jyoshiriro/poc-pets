@@ -29,6 +29,7 @@ public class PetResource {
     private PetService petService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured({"ROLE_usuario", "ROLE_admin"})
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Consulta retornou dados"),
         @ApiResponse(responseCode = "204", description = "Consulta não retornou nenhum dado", content = @Content(schema = @Schema(implementation = Void.class)))

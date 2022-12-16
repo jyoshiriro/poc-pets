@@ -113,28 +113,4 @@ class PetResourceSegurancaTest {
                 .andReturn();
     }
 
-
-    @Test
-    @DisplayName("get busca-rapida deve retornar status 200 se qualquer usuario")
-    @WithMockUser("ze_aleatorio")
-    void getBuscaRapida401() throws Exception {
-        mockMvc.perform(
-                get(URI_BASE+"/busca-rapida")
-                    .param("nome","fofura")
-                    .param("nomeDono", "Zé Ruela"))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
-
-    @Test
-    @DisplayName("get busca-rapida deve retornar status 200 se qualquer perfil")
-    @WithMockUser(roles = "hacker")
-    void getBuscaRapida403() throws Exception {
-        mockMvc.perform(
-                get(URI_BASE+"/busca-rapida")
-                    .param("nome","fofura")
-                    .param("nomeDono", "Zé Ruela"))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
 }
