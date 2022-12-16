@@ -94,8 +94,7 @@ class PetResourceSegurancaTest {
     void get401() throws Exception {
         mockMvc.perform(
                  get(URI_BASE))
-                .andExpect(status().isUnauthorized())
-                .andReturn();
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -104,8 +103,7 @@ class PetResourceSegurancaTest {
     void get403() throws Exception {
         mockMvc.perform(
                 get(URI_BASE))
-                .andExpect(status().isForbidden())
-                .andReturn();
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -114,8 +112,7 @@ class PetResourceSegurancaTest {
     void get204() throws Exception {
         mockMvc.perform(
                 get(URI_BASE))
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().isOk());
     }
 
 }
