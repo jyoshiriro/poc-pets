@@ -109,7 +109,7 @@ class PetResourceSegurancaTest {
     @Test
     @DisplayName("get deve retornar status 200 se usuário autorizado")
     @WithMockUser(roles = "usuario")
-    void get204() throws Exception {
+    void get200() throws Exception {
         mockMvc.perform(
                 get(URI_BASE))
                 .andExpect(status().isOk());
