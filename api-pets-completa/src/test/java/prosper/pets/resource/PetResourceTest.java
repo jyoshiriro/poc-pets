@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.server.ResponseStatusException;
 import prosper.pets.domain.Pet;
 import prosper.pets.domain.racas.TipoRaca;
+import prosper.pets.exception.PetNaoEncontradoException;
 import prosper.pets.service.PetService;
 
 import java.time.LocalDate;
@@ -22,9 +23,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = PetResource.class)
@@ -88,6 +89,26 @@ class PetResourceTest {
                                     .andReturn();
 
         assertEquals(0, resposta.getResponse().getContentLength());
+
+
+
+        MvcResult resposta1Parametro = mockMvc.perform(
+                                                get(URI_BASE).queryParam("nome","batman"))
+                                                .andExpect(status().isNoContent())
+                                                .andReturn();
+
+        assertEquals(0, resposta1Parametro.getResponse().getContentLength());
+
+
+        MvcResult resposta2Parametros = mockMvc.perform(
+                                                get(URI_BASE)
+                                                    .queryParam("nome","batman")
+                                                    .queryParam("tipo","GATO")
+                                                )
+                                                .andExpect(status().isNoContent())
+                                                .andReturn();
+
+        assertEquals(10, resposta2Parametros.getResponse().getContentLength());
     }
 
     @Test
@@ -120,5 +141,18 @@ class PetResourceTest {
 
         assertEquals(lista.get(1).getNome(), corpoResposta.get(1).get("nome"));
         assertEquals(lista.get(1).getPeso(), corpoResposta.get(1).get("peso"));
+    }
+
+
+    @Test
+    @DisplayName("delete deve retornar 404 caso id inexistente")
+    void deleteNaoEncontrado() throws Exception {
+
+        doThrow(PetNaoEncontradoException.class)
+                .when(service).excluir(any(), any());
+
+        mockMvc.perform(
+                delete(URI_BASE+"/-1"))
+                .andExpect(status().isNotFound());
     }
 }

@@ -73,7 +73,7 @@ public class PetResource {
         return ResponseEntity.status(HttpStatus.OK).body(petService.recuperar(id));
     }
 
-    @DeleteMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/{id}")
     @Secured("ROLE_admin")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Registro excluído com sucesso"),
