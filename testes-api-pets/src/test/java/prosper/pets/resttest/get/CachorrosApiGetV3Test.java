@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.blankOrNullString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CachorrosApiGetV3Test {
@@ -39,13 +40,11 @@ public class CachorrosApiGetV3Test {
     }
 
     @Test
-    @DisplayName("GET /pets?filhotes=7000 com conteúdo status 204 e sem corpo")
+    @DisplayName("GET /pets?filhotes=70000 com conteúdo status 204 e sem corpo")
     void testGetSemConteudo() {
-        int tamanhoCorpoResposta = getRequisicao().get("?filhotes=7000").then()
+        getRequisicao().get("?filhotes=70000").then()
                 .statusCode(204)
-                .extract().asByteArray().length;
-
-        assertEquals(0, tamanhoCorpoResposta, "Corpo da resposta deveria estar vazio");
+                .body(blankOrNullString());
     }
 
 }
