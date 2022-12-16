@@ -83,9 +83,9 @@ class PetResourceTest {
         });
 
         MvcResult resposta = mockMvc.perform(
-                        get(URI_BASE))
-                .andExpect(status().isNoContent())
-                .andReturn();
+                                    get(URI_BASE))
+                                    .andExpect(status().isNoContent())
+                                    .andReturn();
 
         assertEquals(0, resposta.getResponse().getContentLength());
     }
@@ -104,9 +104,9 @@ class PetResourceTest {
         when(service.getLista(any(Pet.class))).thenReturn(lista);
 
         MvcResult resposta = mockMvc.perform(
-                        get(URI_BASE))
-                .andExpect(status().isOk())
-                .andReturn();
+                                    get(URI_BASE))
+                                    .andExpect(status().isOk())
+                                    .andReturn();
 
         List<Map<String, Object>> corpoResposta = mapper.readValue(
                 resposta.getResponse().getContentAsString(),
@@ -114,8 +114,10 @@ class PetResourceTest {
         );
 
         assertEquals(2, corpoResposta.size());
+
         assertEquals(lista.get(0).getNome(), corpoResposta.get(0).get("nome"));
         assertEquals(lista.get(0).getPeso(), corpoResposta.get(0).get("peso"));
+
         assertEquals(lista.get(1).getNome(), corpoResposta.get(1).get("nome"));
         assertEquals(lista.get(1).getPeso(), corpoResposta.get(1).get("peso"));
     }

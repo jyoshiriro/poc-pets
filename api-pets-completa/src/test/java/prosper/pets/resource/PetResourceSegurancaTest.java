@@ -16,8 +16,7 @@ import prosper.pets.domain.racas.TipoRaca;
 
 import java.time.LocalDate;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -62,7 +61,7 @@ class PetResourceSegurancaTest {
         requisicao.setTipo(TipoRaca.CACHORRO);
 
         mockMvc.perform(
-                post(URI_BASE).contentType(MediaType.APPLICATION_JSON)
+                patch(URI_BASE).contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(requisicao)))
                 .andExpect(status().isForbidden());
     }
@@ -102,7 +101,7 @@ class PetResourceSegurancaTest {
     @WithMockUser(roles = "hacker")
     void get403() throws Exception {
         mockMvc.perform(
-                get(URI_BASE))
+                delete(URI_BASE))
                 .andExpect(status().isForbidden());
     }
 
