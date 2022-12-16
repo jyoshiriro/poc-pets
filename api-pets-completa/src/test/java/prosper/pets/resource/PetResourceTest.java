@@ -108,7 +108,7 @@ class PetResourceTest {
                                                 .andExpect(status().isNoContent())
                                                 .andReturn();
 
-        assertEquals(10, resposta2Parametros.getResponse().getContentLength());
+        assertEquals(0, resposta2Parametros.getResponse().getContentLength());
     }
 
     @Test
@@ -142,7 +142,6 @@ class PetResourceTest {
         assertEquals(lista.get(1).getNome(), corpoResposta.get(1).get("nome"));
         assertEquals(lista.get(1).getPeso(), corpoResposta.get(1).get("peso"));
     }
-
 
     @Test
     @DisplayName("delete deve retornar 404 caso id inexistente")
