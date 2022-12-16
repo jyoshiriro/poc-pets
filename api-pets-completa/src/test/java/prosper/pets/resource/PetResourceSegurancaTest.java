@@ -73,15 +73,25 @@ class PetResourceSegurancaTest {
     }
 
     @Test
-    @DisplayName("post de Pet deve retornar status 400 se usuário autorizado")
+    @DisplayName("post de Pet deve retornar status 201 se usuário autorizado")
     @WithMockUser(roles = "admin")
     void post400() throws Exception {
         Pet requisicao = new Pet();
+        requisicao.setCpfDono("56254606046");
+        requisicao.setFilhotes(0);
+        requisicao.setNascimento(LocalDate.now().minusYears(2));
+        requisicao.setNome("Fofura");
+        requisicao.setEmailDono("eee@ggg.com");
+        requisicao.setNomeDono("Zé Ruela");
+        requisicao.setTelefoneDono("11 22222-3333");
+        requisicao.setPeso(1.99);
+        requisicao.setRaca("bulldog");
+        requisicao.setTipo(TipoRaca.CACHORRO);
 
         mockMvc.perform(
                 post(URI_BASE).contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(requisicao)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isCreated());
     }
 
     @Test
