@@ -74,7 +74,7 @@ public class CachorrosApiPostV5Test {
         Map corpoInvalido = getMapaDeJson("/pet-tipo-invalido.json");
 
         getRequisicao().body(corpoInvalido)
-                .post().then().log().ifError()
+                .post().then()
                 .statusCode(400)
                 .assertThat()
                 .body(containsString(corpoInvalido.get("tipo").toString()));

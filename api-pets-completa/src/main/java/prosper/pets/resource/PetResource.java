@@ -29,23 +29,12 @@ public class PetResource {
     private PetService petService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured({"ROLE_usuario", "ROLE_admin"})
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Consulta retornou dados"),
         @ApiResponse(responseCode = "204", description = "Consulta não retornou nenhum dado", content = @Content(schema = @Schema(implementation = Void.class)))
     })
     public ResponseEntity<List<Pet>> get(Pet petPesquisa) {
         return ResponseEntity.ok(petService.getLista(petPesquisa));
-    }
-
-    @GetMapping(path = "/busca-rapida", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Consulta retornou dados"),
-        @ApiResponse(responseCode = "204", description = "Consulta não retornou nenhum dado", content = @Content(schema = @Schema(implementation = Void.class)))
-    })
-    public ResponseEntity<List<Pet>> get(@RequestParam String nome,
-                                         @RequestParam String nomeDono) {
-        return ResponseEntity.ok(petService.getLista(nome, nomeDono));
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -92,20 +81,6 @@ public class PetResource {
     public ResponseEntity<Void> delete(@PathVariable Long id,
                                       Authentication authentication) {
         petService.excluir(id, authentication);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PatchMapping("/{id}/peso/{novoPeso}")
-    @Secured("ROLE_admin")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Registro atualizado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "id inválido", content = @Content(schema = @Schema(implementation = Void.class))),
-            @ApiResponse(responseCode = "400", description = "Erro de validação nos dados de entrada", content = @Content(schema = @Schema(implementation = Void.class)))
-    })
-    public ResponseEntity<Void> patch(@PathVariable Long id,
-                                      @PathVariable Double novoPeso,
-                                      Authentication authentication) {
-        petService.atualizarPeso(id, novoPeso, authentication);
         return ResponseEntity.noContent().build();
     }
 

@@ -1,6 +1,7 @@
 package prosper.pets.service;
 
 import feign.FeignException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -49,9 +50,10 @@ public class PetService {
 
     public void atualizar(Long idPet, Pet pet, Authentication authentication) {
         validarId(idPet);
-        pet.setId(idPet);
         setRaca(pet);
-        petRepository.save(pet);
+        Pet anterior = petRepository.findById(idPet).get();
+        BeanUtils.copyProperties(pet, anterior, "id");
+        petRepository.save(anterior);
         registrarLog(authentication, "Pet %d atualizado", pet.getId());
     }
 
