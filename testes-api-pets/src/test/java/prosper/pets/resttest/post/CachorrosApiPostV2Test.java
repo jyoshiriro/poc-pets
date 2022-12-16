@@ -1,4 +1,4 @@
-package prosper.pets.resttest;
+package prosper.pets.resttest.post;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -28,7 +28,7 @@ public class CachorrosApiPostV2Test {
     @Test
     @DisplayName("POST /pets sem autenticação status 401")
     void testPostSemAutenticacao() {
-        Map corpoValido = new JsonPath(getClass().getResource("/pet-valido.json")).getMap("");
+        Map corpoValido = new JsonPath(getClass().getResource("/pet-valido.json")).getMap("$");
 
         getRequisicao().body(corpoValido)
                 .post().then()
@@ -38,7 +38,7 @@ public class CachorrosApiPostV2Test {
     @Test
     @DisplayName("POST /pets sem autorização status 403")
     void testPostSemAutorizacao() {
-        Map corpoValido = new JsonPath(getClass().getResource("/pet-valido.json")).getMap("");
+        Map corpoValido = new JsonPath(getClass().getResource("/pet-valido.json")).getMap("$");
 
         getRequisicao().auth().basic("usuario1", "s1").body(corpoValido)
                 .post().then()

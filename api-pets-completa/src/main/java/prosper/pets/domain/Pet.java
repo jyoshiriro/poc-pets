@@ -76,8 +76,10 @@ public class Pet {
         int anos = periodo.getYears();
         int meses = periodo.getMonths();
         int dias = periodo.getDays();
-
-        return anos+" anos, "+meses+" meses e "+dias+" dias";
+        String textoAnos = "ano"+(anos>1?"s":"");
+        String textoMeses = (meses>1?"meses":"mês");
+        String textoDias = "dia"+(dias>1?"s":"");
+        return String.format("%d %s, %d %s e %d %s", anos, textoAnos, meses, textoMeses, dias, textoDias);
     }
 
     public Long getId() {
