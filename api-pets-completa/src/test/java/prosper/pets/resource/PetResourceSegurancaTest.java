@@ -70,7 +70,7 @@ class PetResourceSegurancaTest {
     @Test
     @DisplayName("post de Pet deve retornar status 201 se usuário autorizado")
     @WithMockUser(roles = "admin")
-    void post400() throws Exception {
+    void post201() throws Exception {
         Pet requisicao = new Pet();
         requisicao.setCpfDono("56254606046");
         requisicao.setFilhotes(0);
