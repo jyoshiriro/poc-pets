@@ -28,7 +28,7 @@ public class CachorrosApiPostV2Test extends AbstractCachorrosApiTest {
     void testPostSemAutorizacao() {
         Map corpoValido = getMapaDeJson("/pet-valido.json");
 
-        given().auth().basic("usuario1", "s1").contentType(ContentType.JSON).body(corpoValido)
+        getRequisicaoUsuario().body(corpoValido)
                 .post().then()
                 .statusCode(403);
     }
@@ -38,7 +38,7 @@ public class CachorrosApiPostV2Test extends AbstractCachorrosApiTest {
     void testPostSemErros() {
         Map corpoValido = getMapaDeJson("/pet-valido.json");
 
-        given().auth().basic("admin", "admin").contentType(ContentType.JSON).body(corpoValido)
+        getRequisicaoAdmin().body(corpoValido)
                 .post().then()
                 .statusCode(201)
                 .assertThat()
@@ -78,7 +78,6 @@ public class CachorrosApiPostV2Test extends AbstractCachorrosApiTest {
                 .statusCode(400)
                 .assertThat()
                 .body(containsString(corpoInvalido.get("nascimento").toString()))
-                .body(containsString(corpoInvalido.get("cpfDono").toString()))
-                .extract().asString();
+                .body(containsString(corpoInvalido.get("cpfDono").toString()));
     }
 }

@@ -26,7 +26,7 @@ public class CachorrosApiGetV2Test {
     @Test
     @DisplayName("GET /pets sem autenticação status 401")
     void testGetSemAutenticacao() {
-        given().get("/pets").then()
+        given().get().then()
                 .statusCode(401);
     }
 
@@ -42,7 +42,7 @@ public class CachorrosApiGetV2Test {
     @DisplayName("GET /pets sem conteúdo status 204 e sem corpo")
     void testGetSemConteudo() {
         getRequisicao().param("nome", "miojo")
-                .get("/pets").then()
+                .get().then()
                 .statusCode(204)
                 .body(blankOrNullString());
     }
