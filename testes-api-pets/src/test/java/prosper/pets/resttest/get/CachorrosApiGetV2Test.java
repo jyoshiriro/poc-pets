@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.blankOrNullString;
 
 public class CachorrosApiGetV2Test {
 
@@ -35,6 +36,15 @@ public class CachorrosApiGetV2Test {
         getRequisicao().get().then()
                 .statusCode(200)
                 .contentType(ContentType.JSON);
+    }
+
+    @Test
+    @DisplayName("GET /pets sem conteúdo status 204 e sem corpo")
+    void testGetSemConteudo() {
+        getRequisicao().param("nome", "miojo")
+                .get("/pets").then().log().all()
+                .statusCode(204)
+                .body(blankOrNullString());
     }
 
 }
