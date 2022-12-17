@@ -61,7 +61,7 @@ class PetResourceSegurancaTest {
         requisicao.setTipo(TipoRaca.CACHORRO);
 
         mockMvc.perform(
-                patch(URI_BASE).contentType(MediaType.APPLICATION_JSON)
+                post(URI_BASE).contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(requisicao)))
                 .andExpect(status().isForbidden());
     }
@@ -79,7 +79,7 @@ class PetResourceSegurancaTest {
         requisicao.setNomeDono("Zé Ruela");
         requisicao.setTelefoneDono("11 22222-3333");
         requisicao.setPeso(1.99);
-        requisicao.setRaca("bulldog");
+        requisicao.setRaca("Papillon");
         requisicao.setTipo(TipoRaca.CACHORRO);
 
         mockMvc.perform(
@@ -97,11 +97,11 @@ class PetResourceSegurancaTest {
     }
 
     @Test
-    @DisplayName("get deve retornar status 403 se usuário sem permissão")
+    @DisplayName("delete deve retornar status 403 se usuário sem permissão")
     @WithMockUser(roles = "hacker")
-    void get403() throws Exception {
+    void delete403() throws Exception {
         mockMvc.perform(
-                delete(URI_BASE))
+                delete(URI_BASE+"/1"))
                 .andExpect(status().isForbidden());
     }
 

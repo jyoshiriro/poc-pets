@@ -52,7 +52,6 @@ public class Pet {
     private TipoRaca tipo;
 
     @Transient
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String raca;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
