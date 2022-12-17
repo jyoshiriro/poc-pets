@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.blankOrNullString;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class CachorrosApiGetV1Test {
 
@@ -29,7 +30,8 @@ public class CachorrosApiGetV1Test {
     void testGetComConteudo() {
         given().auth().basic("usuario1","s1").get("/pets").then()
                 .statusCode(200)
-                .contentType(ContentType.JSON);
+                .contentType(ContentType.JSON)
+                .body("size()", greaterThan(0));
     }
 
     @Test
