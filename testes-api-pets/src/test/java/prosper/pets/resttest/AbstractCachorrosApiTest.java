@@ -7,7 +7,6 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.Map;
-import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 
@@ -32,7 +31,4 @@ public abstract class AbstractCachorrosApiTest {
         return new JsonPath(getClass().getResource(arquivoJson)).getMap("$");
     }
 
-    protected String getTextoAleatorio() {
-        return ("" + System.currentTimeMillis() + UUID.randomUUID()).substring(0, 30);
-    }
 }

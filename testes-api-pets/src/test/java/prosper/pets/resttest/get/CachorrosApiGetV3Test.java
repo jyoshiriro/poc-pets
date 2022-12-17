@@ -1,28 +1,14 @@
 package prosper.pets.resttest.get;
 
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import prosper.pets.resttest.AbstractCachorrosApiTest;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.blankOrNullString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CachorrosApiGetV3Test {
-
-    @BeforeAll
-    static void setup() {
-        RestAssured.baseURI = "http://api.petsperto.com";
-        RestAssured.port = 9000;
-        RestAssured.basePath = "/pets";
-    }
-
-    RequestSpecification getRequisicao() {
-        return given().auth().basic("usuario1", "s1");
-    }
+public class CachorrosApiGetV3Test extends AbstractCachorrosApiTest {
 
     @Test
     @DisplayName("GET /pets sem autenticação status 401")
@@ -34,15 +20,16 @@ public class CachorrosApiGetV3Test {
     @Test
     @DisplayName("GET /pets com conteúdo status 200 e application/json")
     void testGetComConteudo() {
-        getRequisicao().get().then()
+        getRequisicaoUsuario().get().then()
                 .statusCode(200)
                 .contentType(ContentType.JSON);
     }
 
     @Test
-    @DisplayName("GET /pets?filhotes=70000 com conteúdo status 204 e sem corpo")
+    @DisplayName("GET /pets sem conteúdo status 204 e sem corpo")
     void testGetSemConteudo() {
-        getRequisicao().get("?filhotes=70000").then()
+        getRequisicaoUsuario().param("nome", "miojo")
+                .get("/pets").then()
                 .statusCode(204)
                 .body(blankOrNullString());
     }

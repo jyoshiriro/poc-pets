@@ -42,7 +42,7 @@ public class CachorrosApiGetV2Test {
     @DisplayName("GET /pets sem conteúdo status 204 e sem corpo")
     void testGetSemConteudo() {
         getRequisicao().param("nome", "miojo")
-                .get("/pets").then().log().all()
+                .get("/pets").then()
                 .statusCode(204)
                 .body(blankOrNullString());
     }

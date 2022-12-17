@@ -1,33 +1,22 @@
 package prosper.pets.resttest.post;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import prosper.pets.resttest.AbstractCachorrosApiTest;
 
 import java.util.Map;
 
-import static io.restassured.RestAssured.given;
-
-public class CachorrosApiPostV1Test {
-
-    @BeforeAll
-    static void setup() {
-        RestAssured.baseURI = "http://api.petsperto.com";
-        RestAssured.port = 9000;
-        RestAssured.basePath = "/pets";
-    }
+public class CachorrosApiPostV1Test extends AbstractCachorrosApiTest {
 
     @Test
-    @DisplayName("POST /pets sem autenticação status 401")
+    @DisplayName("POST /pets com corpo válido status 201")
     void testPostSemAutenticacao() {
         Map corpoValido = new JsonPath(getClass().getResource("/pet-valido.json")).getMap("$");
 
-        given().contentType(ContentType.JSON).body(corpoValido)
+        getRequisicaoAdmin().body(corpoValido)
                 .post().then()
-                .statusCode(401);
+                .statusCode(201);
     }
 
 }

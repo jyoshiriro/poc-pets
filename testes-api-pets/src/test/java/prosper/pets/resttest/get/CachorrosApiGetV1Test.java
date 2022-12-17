@@ -38,7 +38,7 @@ public class CachorrosApiGetV1Test {
     @DisplayName("GET /pets sem conteúdo status 204 e sem corpo")
     void testGetSemConteudo() {
         given().auth().basic("usuario1", "s1").param("nome", "miojo")
-                .get("/pets").then().log().all()
+                .get("/pets").then()
                 .statusCode(204)
                 .body(blankOrNullString());
     }

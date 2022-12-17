@@ -5,13 +5,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import prosper.pets.resttest.AbstractCachorrosApiTest;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.Matchers.equalTo;
 
 public class CachorrosApiPutTest extends AbstractCachorrosApiTest {
 
@@ -39,7 +37,8 @@ public class CachorrosApiPutTest extends AbstractCachorrosApiTest {
     @Test
     @DisplayName("PUT /pets com id inválido status 404")
     void testPutInexistente() {
-        getRequisicaoAdmin().body(getMapaDeJson("/pet-valido.json")).put("/-100").then()
+        getRequisicaoAdmin().body(getMapaDeJson("/pet-valido.json"))
+                .put("/-100").then()
                 .statusCode(404);
     }
 
@@ -66,28 +65,15 @@ public class CachorrosApiPutTest extends AbstractCachorrosApiTest {
     }
 
     @Test
-    @DisplayName("PUT /pets com tipo inválido status 400")
-    void testPutTipoInvalido() {
-        Map corpoInvalido = getMapaDeJson("/pet-tipo-invalido.json");
-
-        getRequisicaoAdmin().body(corpoInvalido)
-                .post().then()
-                .statusCode(400)
-                .assertThat()
-                .body(containsString(corpoInvalido.get("tipo").toString()));
-    }
-
-    @Test
-    @DisplayName("PUT /pets com nome do pet e CPF do dono inválidos status 400")
+    @DisplayName("PUT /pets com nascimento do pet e CPF do dono inválidos status 400")
     void testPutNomeCpfInvalidos() {
-        Map corpoInvalido = getMapaDeJson("/pet-nome-cpfdono-invalidos.json");
+        Map corpoInvalido = getMapaDeJson("/pet-nascimento-cpfdono-invalidos.json");
 
         getRequisicaoAdmin().body(corpoInvalido)
                 .post().then()
                 .statusCode(400)
                 .assertThat()
-                .body("message", containsString("2"))
-                .body(containsString("pet.nome"))
+                .body(containsString(corpoInvalido.get("nascimento").toString()))
                 .body(containsString(corpoInvalido.get("cpfDono").toString()))
                 .extract().asString();
     }
