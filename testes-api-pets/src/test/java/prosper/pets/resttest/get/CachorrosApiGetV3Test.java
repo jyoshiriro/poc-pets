@@ -8,6 +8,10 @@ import prosper.pets.resttest.AbstractCachorrosApiTest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.blankOrNullString;
 
+/*
+Aqui fizemos a classe de teste ser subclasse da AbstractCachorrosApiTest
+para reduzir o volume de código repetido aqui e para não termo que definir as configurações da API a ser testada aqui
+ */
 public class CachorrosApiGetV3Test extends AbstractCachorrosApiTest {
 
     @Test
@@ -23,6 +27,7 @@ public class CachorrosApiGetV3Test extends AbstractCachorrosApiTest {
         getRequisicaoUsuario().get().then()
                 .statusCode(200)
                 .contentType(ContentType.JSON);
+        // getRequisicaoUsuario() veio da AbstractCachorrosApiTest
     }
 
     @Test
@@ -32,6 +37,7 @@ public class CachorrosApiGetV3Test extends AbstractCachorrosApiTest {
                 .get().then()
                 .statusCode(204)
                 .body(blankOrNullString());
+        // getRequisicaoUsuario() veio da AbstractCachorrosApiTest
     }
 
 }

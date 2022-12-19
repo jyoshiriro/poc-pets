@@ -9,12 +9,22 @@ import static org.hamcrest.Matchers.blankOrNullString;
 import static org.hamcrest.Matchers.greaterThan;
 
 public class CachorrosApiGetV1Test {
-
+    /*
+    OBS: como não configuramos nada no REST Assured, ele vai tentar usar a URL
+    http://localhost:8080
+    para testar os EndPoints
+     */
     @Test
     @DisplayName("GET /pets sem autenticação status 401")
     void testGetSemAutenticacao() {
         given().get("/pets").then()
                 .statusCode(401);
+        /*
+        No código acima, pedimos para o REST Assured:
+        - efetuar um get /pets
+        - verificar se o status da resposta é 401 (Unauthorized),
+          afinal não passamos nenhum usuário
+         */
     }
 
     @Test
@@ -23,6 +33,12 @@ public class CachorrosApiGetV1Test {
         given().auth().basic("hacker","hacker").get("/pets").then()
                 .statusCode(403)
                 .contentType(ContentType.JSON);
+        /*
+        No código acima, pedimos para o REST Assured:
+        - efetuar um get /pets
+        - verificar se o status da resposta é 403 (Forbidden),
+          afinal o usuário "hacker" não deveria ter permissão nenhuma na API
+         */
     }
 
     @Test
@@ -32,6 +48,12 @@ public class CachorrosApiGetV1Test {
                 .statusCode(200)
                 .contentType(ContentType.JSON)
                 .body("size()", greaterThan(0));
+        /*
+        No código acima, pedimos para o REST Assured:
+        - efetuar um get /pets com o usuário "usuario1"
+        - verificar se o status da resposta é 200 (Ok)
+        - verificar se o corpo da resposta tem tamanho maior 0 (se NÃO é vazio mesmo)
+         */
     }
 
     @Test
@@ -41,6 +63,12 @@ public class CachorrosApiGetV1Test {
                 .get("/pets").then()
                 .statusCode(204)
                 .body(blankOrNullString());
+        /*
+        No código acima, pedimos para o REST Assured:
+        - efetuar um get /pets?nome=miojo com o usuário "usuario1"
+        - verificar se o status da resposta é 204 (No Content)
+        - verificar se o corpo da resposta está vazio mesmo
+         */
     }
 
 }

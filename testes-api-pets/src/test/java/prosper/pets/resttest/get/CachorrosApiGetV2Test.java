@@ -12,13 +12,14 @@ import static org.hamcrest.Matchers.blankOrNullString;
 
 public class CachorrosApiGetV2Test {
 
-    @BeforeAll
+    @BeforeAll // acontecerá apenas 1x e antes de qualquer método de teste da classe ser executado
     static void setup() {
-        RestAssured.baseURI = "http://api.petsperto.com";
-        RestAssured.port = 9000;
-        RestAssured.basePath = "/pets";
+        RestAssured.baseURI = "http://api.petsperto.com"; // definindo o "endereço" API que será testada
+        RestAssured.port = 9000; // definindo a porta da API que será testada
+        RestAssured.basePath = "/pets";  // definindo o caminho base da API que será testada
     }
 
+    // cria e retorna uma requisição do tipo "basic" com login "usuario1" e senha "s1"
     RequestSpecification getRequisicao() {
         return given().auth().basic("usuario1", "s1");
     }
